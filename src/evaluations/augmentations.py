@@ -177,8 +177,15 @@ def get_number_of_channels_after_augmentations(input_dim, augmentations):
     return y.shape[-1]
 
 
-AUGMENTATIONS = {'AddTime': AddTime, 'Basepoint': Basepoint, 'CumSum': Cumsum, 'LeadLag': LeadLag,
-        'Scale': Scale,  'VisiTrans': VisiTrans, 'Concat_rtn': Concat_rtn}
+AUGMENTATIONS = {
+    'AddTime': AddTime, 
+    'Basepoint': Basepoint, 
+    'CumSum': Cumsum, 
+    'LeadLag': LeadLag,
+    'Scale': Scale,  
+    'VisiTrans': VisiTrans, 
+    'Concat_rtn': Concat_rtn
+    }
 
 
 def parse_augmentations(list_of_dicts):

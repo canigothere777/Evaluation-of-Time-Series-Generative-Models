@@ -8,7 +8,8 @@ from src.utils import loader_to_tensor, to_numpy, save_obj
 import matplotlib.pyplot as plt
 from os import path as pt
 import seaborn as sns
-from src.evaluations.test_metrics import Sig_mmd, SigW1Loss, CrossCorrelLoss, HistoLoss, CovLoss, ACFLoss, sig_mmd_permutation_test
+from src.evaluations.test_metrics import *
+# from src.evaluations.test_metrics import Sig_mmd, SigW1Loss, CrossCorrelLoss, HistoLoss, CovLoss, ACFLoss, sig_mmd_permutation_test
 import numpy as np
 from sklearn.manifold import TSNE
 import os
@@ -443,9 +444,6 @@ def visualization(real_dl, fake_dl, config, plot_show=False):
     plt.close()
 
 
-# def FID_score()
-
-
 def train_predictive_FID_model(real_train_dl, real_test_dl, config,
                                hidden_size=64, num_layers=3, epochs=100, batch_size=64):
     # Modified from: https://github.com/bioinf-jku/TTUR/blob/master/fid.py
@@ -630,7 +628,7 @@ def full_evaluation(generator, real_train_dl, real_test_dl, config, **kwargs):
             sig_mmd = Sig_mmd(real, fake, depth=5)
         Sig_MMDs.append(sig_mmd)
         cross_corrs.append(to_numpy(CrossCorrelLoss(
-            real, name='cross_correlation')(fake)))
+            real, name='CrossCorrelation')(fake)))
         if config.dataset == 'GBM' or config.dataset == 'ROUGH':
             # Ignore the starting point
             hist_losses.append(

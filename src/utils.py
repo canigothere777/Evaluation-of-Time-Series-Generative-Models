@@ -62,15 +62,6 @@ def sample_indices(dataset_size, batch_size):
     return indices.long()
 
 
-def to_numpy(x):
-    """
-    Casts torch.Tensor to a numpy ndarray.
-
-    The function detaches the tensor from its gradients, then puts it onto the cpu and at last casts it to numpy.
-    """
-    return x.detach().cpu().numpy()
-
-
 def set_seed(seed: int):
     """ Sets the seed to a specified value. Needed for reproducibility of experiments. """
     torch.manual_seed(seed)
