@@ -39,7 +39,8 @@ test_metrics = {
     'marginal_distribution': partial(HistoLoss, n_bins=50, name='marginal_distribution'),
     'cross_correl': partial(CrossCorrelLoss, name='cross_correl'),
     'covariance': partial(CovLoss, name='covariance'),
-    'auto_correl': partial(ACFLoss, name='auto_correl')}
+    'auto_correl': partial(ACFLoss, name='auto_correl')
+    }
 
 
 def is_multivariate(x: torch.Tensor):

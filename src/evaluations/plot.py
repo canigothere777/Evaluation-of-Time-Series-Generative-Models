@@ -260,30 +260,61 @@ def set_style(ax):
     ax.spines['bottom'].set_visible(False)
 
 
-def plot_samples(real_dl, fake_dl, config, plot_show=False):
+def plot_samples_per_dataset(dl, label='',save_dir=None, plot_show=False):
     sns.set()
-    real_X, fake_X = loader_to_tensor(real_dl), loader_to_tensor(fake_dl)
-    x_real_dim = real_X.shape[-1]
+    x = loader_to_tensor(dl)
+    x_dim = x.shape[-1]
 
-    for i in range(x_real_dim):
-        random_indices = torch.randint(0, real_X.shape[0], (250,))
+    for i in range(x_dim):
+        random_indices = torch.randint(0, x.shape[0], (250,))
         plt.plot(
-            to_numpy(real_X[random_indices, :, i]).T, 'C%s' % i, alpha=0.1)
+            to_numpy(x[random_indices, :, i]).T, 'C%s' % i, alpha=0.1)
     if plot_show:
-        plt.title('real')
+        plt.title(label)
         plt.show()
     else:
-        plt.savefig(pt.join(config.exp_dir, 'x_real.png'))
+        if save_dir is None:
+            raise ValueError('save_dir is None')
+        else:
+            plt.savefig(pt.join(save_dir, f'x_{label}.png'))
     plt.close()
 
-    for i in range(x_real_dim):
-        plt.plot(to_numpy(fake_X[:250, :, i]).T, 'C%s' % i, alpha=0.1)
-    if plot_show:
-        plt.title('fake')
-        plt.show()
-    else:
-        plt.savefig(pt.join(config.exp_dir, 'x_real.png'))
-    plt.close()
+def plot_samples(real_dl, fake_dl, config, plot_show=False):
+    save_dir = config.exp_dir
+    if real_dl is not None:
+        plot_samples_per_dataset(real_dl, 'real', save_dir, plot_show)
+    if fake_dl is not None:
+        plot_samples_per_dataset(fake_dl, 'fake', save_dir, plot_show)
+
+
+# def plot_samples(real_dl, fake_dl, config, plot_show=False):
+#     sns.set()
+#     if real_dl is not None:
+#         real_X = loader_to_tensor(real_dl)
+#         x_real_dim = real_X.shape[-1]
+
+#         for i in range(x_real_dim):
+#             random_indices = torch.randint(0, real_X.shape[0], (250,))
+#             plt.plot(
+#                 to_numpy(real_X[random_indices, :, i]).T, 'C%s' % i, alpha=0.1)
+#         if plot_show:
+#             plt.title('real')
+#             plt.show()
+#         else:
+#             plt.savefig(pt.join(config.exp_dir, 'x_real.png'))
+#         plt.close()
+
+#     if fake_dl is not None:
+#         fake_X = loader_to_tensor(fake_dl)
+#         x_fake_dim = fake_X.shape[-1]
+#         for i in range(x_fake_dim):
+#             plt.plot(to_numpy(fake_X[:250, :, i]).T, 'C%s' % i, alpha=0.1)
+#         if plot_show:
+#             plt.title('fake')
+#             plt.show()
+#         else:
+#             plt.savefig(pt.join(config.exp_dir, 'x_fake.png'))
+#         plt.close()
 
 
 def plot_non_stationary_autocorrelation(x1, x2, config, ignore_diagonal=False, plot_show=False):

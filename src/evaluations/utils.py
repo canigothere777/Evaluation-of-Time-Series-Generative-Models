@@ -1,7 +1,9 @@
 import torch
-from src.utils import to_numpy
+from src.utils import *
 from src.evaluations.augmentations import apply_augmentations, parse_augmentations, Basepoint, Scale
 import signatory
+import numpy as np
+import math
 
 def cov_torch(x, rowvar=False, bias=True, ddof=None, aweights=None):
     # """Estimates covariance matrix like numpy.cov"""
@@ -57,7 +59,6 @@ def cov_torch(x, rowvar=False, bias=True, ddof=None, aweights=None):
     _, L, C = x.shape
     x = x.reshape(-1, L*C)
     return torch.from_numpy(np.cov(x, rowvar=False)).to(device).float()
-
 
 def q_var_torch(x: torch.Tensor):
     """

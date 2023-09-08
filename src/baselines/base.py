@@ -7,6 +7,7 @@ import wandb
 import seaborn as sns
 import matplotlib.pyplot as plt
 from os import path as pt
+import src.evaluations.plot as plot_eval
 
 
 class BaseTrainer:
@@ -72,17 +73,4 @@ class BaseTrainer:
 
     @staticmethod
     def plot_sample(real_X, fake_X, config):
-        sns.set()
-
-        x_real_dim = real_X.shape[-1]
-        for i in range(x_real_dim):
-            plt.plot(to_numpy(fake_X[:250, :, i]).T, 'C%s' % i, alpha=0.1)
-        plt.savefig(pt.join(config.exp_dir, 'x_fake.png'))
-        plt.close()
-
-        for i in range(x_real_dim):
-            random_indices = torch.randint(0, real_X.shape[0], (250,))
-            plt.plot(
-                to_numpy(real_X[random_indices, :, i]).T, 'C%s' % i, alpha=0.1)
-        plt.savefig(pt.join(config.exp_dir, 'x_real.png'))
-        plt.close()
+        plot_eval.plot_samples(real_X, fake_X, config)

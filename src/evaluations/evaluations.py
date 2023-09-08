@@ -308,17 +308,17 @@ def compute_discriminative_score(real_train_dl, real_test_dl, fake_train_dl, fak
     return abs(mean_acc-0.5), std_acc
 
 
-def plot_samples1(real_dl, fake_dl, config):
-    sns.set()
-    real_X, fake_X = loader_to_tensor(real_dl), loader_to_tensor(fake_dl)
-    x_real_dim = real_X.shape[-1]
-    for i in range(x_real_dim):
-        random_indices = torch.randint(0, real_X.shape[0], (100,))
-        plt.plot(to_numpy(fake_X[:100, :, i]).T, 'C%s' % i, alpha=0.1)
-        plt.plot(
-            to_numpy(real_X[random_indices, :, i]).T, 'C%s' % i, alpha=0.1)
-        plt.savefig(pt.join(config.exp_dir, 'sample_plot{}.png'.format(i)))
-        plt.close()
+# def plot_samples1(real_dl, fake_dl, config):
+#     sns.set()
+#     real_X, fake_X = loader_to_tensor(real_dl), loader_to_tensor(fake_dl)
+#     x_real_dim = real_X.shape[-1]
+#     for i in range(x_real_dim):
+#         random_indices = torch.randint(0, real_X.shape[0], (100,))
+#         plt.plot(to_numpy(fake_X[:100, :, i]).T, 'C%s' % i, alpha=0.1)
+#         plt.plot(
+#             to_numpy(real_X[random_indices, :, i]).T, 'C%s' % i, alpha=0.1)
+#         plt.savefig(pt.join(config.exp_dir, 'sample_plot{}.png'.format(i)))
+#         plt.close()
 
 
 def set_style(ax):
